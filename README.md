@@ -1,6 +1,9 @@
-# retryer
+# Retryer
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to retrying a failed code block.
+
+This is inspired by [Retryable Ruby gem](https://github.com/kamui/retriable).
+
 
 ## Usage
 
