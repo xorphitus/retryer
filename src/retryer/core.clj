@@ -1,6 +1,10 @@
 (ns retryer.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn retryer
+  "retry a given function"
+  [f times]
+  (->> (take times (iterate inc 0))
+       (map f)
+       (filter #(not= nil? %))
+       (take 1)
+       first))

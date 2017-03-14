@@ -2,6 +2,10 @@
   (:require [clojure.test :refer :all]
             [retryer.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest retryer-test
+  (let [cnt (atom 0)
+        expectation 1]
+    (is (= (retryer
+            (fn [n] (swap! cnt inc))
+            1)
+           expectation))))
