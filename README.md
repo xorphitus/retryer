@@ -7,7 +7,12 @@ This is inspired by [Retryable Ruby gem](https://github.com/kamui/retriable).
 
 ## Usage
 
-FIXME
+```clj
+(retryer
+ (fn [n] (http-request n))
+ :on FooException
+ :tries 3)
+```
 
 ## License
 
