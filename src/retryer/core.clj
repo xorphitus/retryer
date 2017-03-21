@@ -2,9 +2,10 @@
 
 (defn retryer
   "retry a given function"
-  [f times]
+  [f times execption]
   (->> (take times (iterate inc 0))
-       (map f)
+       (map
+        (fn [n] (f n)))
        (filter #(not= nil? %))
        (take 1)
        first))
