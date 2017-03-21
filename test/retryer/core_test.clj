@@ -3,9 +3,22 @@
             [retryer.core :refer :all]))
 
 (deftest retryer-test
-  (let [cnt (atom 0)
-        expectation 1]
-    (is (= (retryer
-            (fn [n] (swap! cnt inc))
-            1)
-           expectation))))
+  (testing "without execption"
+    (let [cnt (atom 0)
+          expectation 1]
+      (is (= (retryer
+              (fn [n] (swap! cnt inc))
+              3
+              RuntimeException)
+             expectation))))
+  (testing "with execption"
+    (let [cnt (atom 0)
+          expectation 3]
+      (is (= (retryer
+              (fn [n]
+                (if (> (swap! cnt inc) 3)
+                  (throw (RuntimeException. "NG"))
+                  @cnt))
+              3
+              RuntimeException)
+             expectation)))))
