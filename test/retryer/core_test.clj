@@ -16,9 +16,10 @@
           expectation 3]
       (is (= (retryer
               (fn [n]
-                (if (> (swap! cnt inc) 3)
-                  (throw (RuntimeException. "NG"))
-                  @cnt))
+                (do (swap! cnt inc)
+                    (if (< n 2)
+                      (throw (RuntimeException. "NG"))
+                      @cnt)))
               3
               RuntimeException)
              expectation)))))

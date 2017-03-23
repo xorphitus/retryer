@@ -9,6 +9,6 @@
                   (~f n#)
                   (catch ~execption e#
                     nil))))
-       (filter #(not= nil? %))
+       (filter #(not (nil? %)))
        (take 1)
        first))
