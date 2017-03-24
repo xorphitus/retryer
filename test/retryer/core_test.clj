@@ -11,7 +11,7 @@
               3
               RuntimeException)
              expectation))))
-  (testing "with execption"
+  (testing "with execption, finally success"
     (let [cnt (atom 0)
           expectation 3]
       (is (= (retryer
@@ -20,6 +20,14 @@
                     (if (< n 2)
                       (throw (RuntimeException. "NG"))
                       @cnt)))
+              3
+              RuntimeException)
+             expectation))))
+  (testing "with execption, finally fail"
+    (let [expectation nil]
+      (is (= (retryer
+              (fn [n]
+                (throw (RuntimeException. "NG")))
               3
               RuntimeException)
              expectation)))))
