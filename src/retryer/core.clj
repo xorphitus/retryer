@@ -1,5 +1,13 @@
 (ns retryer.core)
 
+(def sleeps
+  (let [base-interval 0.5
+        multiplier 1.5
+        sleep-sec (iterate #(* % multiplier) base-interval)]
+    (map #(do (Thread/sleep %)
+              nil)
+         sleep-sec)))
+
 (defmacro retryer
   "retry a given function"
   [f times execption]
@@ -9,9 +17,7 @@
                     (~f n#)
                     (catch ~execption e#
                       nil))))
-        (#(interleave %
-                      (repeat (do (Thread/sleep 1)
-                                  nil))))
+        (#(interleave % sleeps))
         (filter #(not (nil? %)))
         (take 1)
         first))
